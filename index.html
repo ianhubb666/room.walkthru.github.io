@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0a0f">
+<meta property="og:title" content="Room 3D Tour">
+<meta property="og:description" content="Interactive 3D bedroom walkthrough — orbit, walk, and rearrange furniture.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Room 3D Tour">
+<meta name="twitter:description" content="Interactive 3D bedroom walkthrough — orbit, walk, and rearrange furniture.">
+<title>Room 3D Tour</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    height: 100%; background: #0a0a0f;
+    font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+    color: #fff; overflow: hidden;
+  }
+  .bg {
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(40,60,120,0.4) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(60,40,100,0.3) 0%, transparent 50%),
+      radial-gradient(ellipse at 60% 80%, rgba(20,60,80,0.3) 0%, transparent 50%),
+      #0a0a0f;
+  }
+  .bg::after {
+    content: ''; position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.055) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: gridDrift 20s linear infinite;
+  }
+  @keyframes gridDrift { to { transform: translateY(40px); } }
+
+  .card {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 100vh; padding: 40px 24px; text-align: center;
+  }
+
+  .icon {
+    width: 72px; height: 72px; margin-bottom: 28px;
+    background: rgba(100,160,255,0.08);
+    border: 1px solid rgba(100,160,255,0.22);
+    border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-8px); }
+  }
+
+  h1 {
+    font-size: clamp(28px, 6vw, 48px); font-weight: 700; letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #fff 0%, rgba(160,200,255,0.9) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 12px;
+  }
+  p.sub {
+    font-size: clamp(13px, 2vw, 16px); color: rgba(255,255,255,0.38);
+    line-height: 1.65; max-width: 360px; margin-bottom: 44px;
+  }
+
+  .btn-group {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    justify-content: center; margin-bottom: 48px;
+  }
+  .btn {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 28px; border-radius: 12px;
+    font-size: 14px; font-weight: 600; letter-spacing: 0.2px;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+
+  .btn-primary {
+    background: rgba(80,140,255,0.18);
+    border: 1px solid rgba(80,140,255,0.45);
+    color: #fff;
+    box-shadow: 0 0 24px rgba(80,140,255,0.12);
+  }
+  .btn-primary:hover {
+    background: rgba(80,140,255,0.28);
+    box-shadow: 0 0 40px rgba(80,140,255,0.22);
+  }
+  .btn-secondary {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.7);
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+  .features {
+    display: flex; gap: 9px; flex-wrap: wrap;
+    justify-content: center; max-width: 480px;
+  }
+  .pill {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.3px;
+    color: rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 5px 12px; border-radius: 20px;
+  }
+
+  #notice {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    font-size: 11px; color: rgba(255,255,255,0.18);
+    white-space: nowrap; z-index: 10; transition: opacity 0.4s;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+
+<div class="card">
+
+  <div class="icon">
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none"
+         stroke="rgba(120,180,255,0.85)" stroke-width="1.5"
+         stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+      <polyline points="9 22 9 12 15 12 15 22"/>
+    </svg>
+  </div>
+
+  <h1>Room 3D Tour</h1>
+  <p class="sub">An interactive 3D bedroom — walk through it, orbit around it, and rearrange the furniture.</p>
+
+  <div class="btn-group">
+    <a class="btn btn-primary" href="desktop.html">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <line x1="8" y1="21" x2="16" y2="21"/>
+        <line x1="12" y1="17" x2="12" y2="21"/>
+      </svg>
+      Desktop
+    </a>
+    <a class="btn btn-secondary" href="room3d_mobile.html">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="5" y="2" width="14" height="20" rx="2"/>
+        <circle cx="12" cy="18" r="1"/>
+      </svg>
+      Mobile
+    </a>
+  </div>
+
+  <div class="features">
+    <span class="pill">Walk Mode</span>
+    <span class="pill">Orbit View</span>
+    <span class="pill">Move Furniture</span>
+    <span class="pill">Top-down Plan</span>
+    <span class="pill">Transparent Walls</span>
+    <span class="pill">Touch Controls</span>
+  </div>
+
+</div>
+
+<div id="notice"></div>
+
+<script>
+  const mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+              || (navigator.maxTouchPoints > 1 && window.innerWidth < 900);
+  const notice = document.getElementById('notice');
+  const dest   = mobile ? 'room3d_mobile.html' : 'desktop.html';
+  const label  = mobile ? 'Mobile' : 'Desktop';
+  notice.textContent = `${label} detected — launching…`;
+  setTimeout(() => { window.location.href = dest; }, 1400);
+</script>
+
+</body>
+</html>
